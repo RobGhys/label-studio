@@ -2,12 +2,12 @@
 INPUT_DIR=$1
 WILDCARD=${2}
 OUTPUT_FILE=${3:-"files.txt"}
-PORT=${4:-8081}
+PORT=${4:-3000}
 
 echo "Usage: sh serve_local_files.sh INPUT_DIR WILDCARD OUTPUT_FILE PORT"
 echo "This script scans INPUT_DIR directory with WILDCARD filter [all files by default],"
 echo "generates OUTPUT_FILE [files.txt by default] with a file list,"
-echo "starts web server on the port PORT [8081 by default] that serves files from INPUT_DIR"
+echo "starts web server on the port PORT [3000 by default] that serves files from INPUT_DIR with CORS enabled"
 echo
 
 echo "Scanning ${INPUT_DIR} ..."
@@ -26,6 +26,6 @@ green=`tput setaf 2`
 reset=`tput sgr0`
 echo "${green}File list stored in '${OUTPUT_FILE}'. Now import it directly from Label Studio UI${reset}"
 
-echo "Running web server on the port ${PORT}"
+echo "Running web server on the port ${PORT} with CORS enabled"
 cd $INPUT_DIR
-python3 -m http.server $PORT
+http-server -p $PORT --cors
