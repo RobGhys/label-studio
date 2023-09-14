@@ -9,7 +9,7 @@ PORT=${3:-3000}
 echo "Usage: sh serve_local_files.sh ROOT_DIR WILDCARD PORT"
 echo "This script scans INPUT_DIR directory with WILDCARD filter [all files by default],"
 echo "ROOT_DIR : Root Directory containing sub-directories with images"
-echo "WILDCARD : Filters pour les types de fichiers à servir [default = *]"
+echo "WILDCARD : Filters for the type of files to serve [default = *]"
 echo "Starts web server on the port PORT [3000 by default] that serves files from INPUT_DIR with CORS enabled"
 echo "Generates output files"
 echo
@@ -24,9 +24,9 @@ for SUB_DIR in $ROOT_DIR/*; do
     echo "Scan sub-directory: ${SUB_DIR_NAME} ..."
 
     # Find image files and create txt file
-    FIND_CMD="find ${SUB_DIR} -type f -name ${WILDCARD}"
-    INPUT_DIR_ESCAPED=$(printf '%s\n' "$SUB_DIR" | sed -e 's/[\/&]/\\&/g')
-    eval $FIND_CMD | sed "s|${INPUT_DIR_ESCAPED}|http://localhost:${PORT}/${SUB_DIR_NAME}|g" > $OUTPUT_FILE
+    FIND_CMD="find \"$SUB_DIR\" -type f -name \"$WILDCARD\""
+    echo "Executing: $FIND_CMD"
+    eval "$FIND_CMD" | sed "s|$SUB_DIR|http://localhost:${PORT}/${SUB_DIR_NAME}|g" > "$OUTPUT_FILE"
 
     echo "Created txt file : ${OUTPUT_FILE}"
   fi
@@ -34,5 +34,5 @@ done
 
 # Démarrage du serveur web
 echo "Run web server on port ${PORT} with CORS enabled"
-cd $ROOT_DIR
+cd "$ROOT_DIR" || exit
 http-server -p $PORT --cors
