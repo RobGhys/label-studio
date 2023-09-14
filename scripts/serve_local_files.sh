@@ -26,7 +26,7 @@ for SUB_DIR in $ROOT_DIR/*; do
     # Find image files and create txt file
     FIND_CMD="find \"$SUB_DIR\" -type f -name \"$WILDCARD\""
     echo "Executing: $FIND_CMD"
-    eval "$FIND_CMD" | sed "s|$SUB_DIR|http://localhost:${PORT}/${SUB_DIR_NAME}|g" > "$OUTPUT_FILE"
+    eval "$FIND_CMD" | sed "s|$SUB_DIR|http://192.168.0.153:${PORT}/${SUB_DIR_NAME}|g" > "$OUTPUT_FILE"
 
     echo "Created txt file : ${OUTPUT_FILE}"
   fi
