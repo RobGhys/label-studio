@@ -15,10 +15,10 @@ echo "Generates output files"
 echo
 
 # Loop through sub-directories
-for SUB_DIR in $ROOT_DIR/*; do
+find "$ROOT_DIR" -maxdepth 1 -type d | while read -r SUB_DIR; do
   if [ -d "$SUB_DIR" ]; then
     # Get sub-directory name and prepare txt file name
-    SUB_DIR_NAME=$(basename $SUB_DIR)
+    SUB_DIR_NAME=$(basename "$SUB_DIR")
     OUTPUT_FILE="${SUB_DIR_NAME}.txt"
 
     echo "Scan sub-directory: ${SUB_DIR_NAME} ..."
